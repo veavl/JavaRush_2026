@@ -1,0 +1,105 @@
+<h1>Где создается class файл и кто чистит out</h1>
+
+<h4>Где создается Calculator.class при запуске без javac</h4>
+
+<p>При запуске без <span class="art_cell_gray">javac</span> (через IDE, например IntelliJ IDEA) <span class="art_cell_gray">.class</span> файл создается автоматически в директории <span class="java_red">out</span>.</p>
+
+<h5>Расположение class файла при запуске через IDE</h5>
+
+<p>В вашем проекте <span class="art_cell_gray">.class</span> файл создается в:</p>
+
+<pre class="line-numbers"><code class="language-java">out/production/JavaRush_2026/module1/level_01/lecture_05/Calculator.class
+</code></pre>
+
+<h6><strong>Структура компиляции</strong></h6>
+<div class="p_info">
+<p><strong>При ручной компиляции через javac:</strong></p>
+
+<p><span class="art_cell_gray">.class</span> файл создается в той же директории, где находится <span class="art_cell_gray">.java</span> файл. В вашем случае: <span class="art_cell_gray">src/module1/level_01/lecture_05/Calculator.class</span></p>
+
+<p><strong>При запуске через IDE (IntelliJ IDEA):</strong></p>
+
+<p>IDE автоматически компилирует файлы. <span class="art_cell_gray">.class</span> файл создается в директории <span class="art_cell_gray">out/production/&lt;имя_проекта&gt;/</span>. В вашем случае: <span class="art_cell_gray">out/production/JavaRush_2026/module1/level_01/lecture_05/Calculator.class</span></p>
+</div>
+
+<h5>Почему так организовано</h5>
+
+<p><span class="java_tags">Разделение исходников и скомпилированных файлов:</span></p>
+
+<p><span class="art_cell_gray">src/</span> — исходные файлы (<span class="art_cell_gray">.java</span>)</p>
+<p><span class="art_cell_gray">out/</span> — скомпилированные файлы (<span class="art_cell_gray">.class</span>)</p>
+
+<p>Это разделение нужно для того, чтобы:</p>
+
+<p><strong>Не смешивать исходники и скомпилированные файлы</strong> — проще навигация по проекту</p>
+<p><em>Упростить очистку</em> — можно просто удалить папку <span class="art_cell_gray">out</span></p>
+<p>Соответствовать <span class="java_doc">стандартной структуре проектов</span> — общепринятая практика в Java</p>
+
+<h6><strong>Важное замечание</strong></h6>
+<div class="p_info">
+<p>При запуске через IDE classpath указывается на <span class="art_cell_gray">out/production/JavaRush_2026</span>, поэтому IDE находит классы там, а не в <span class="art_cell_gray">src</span>.</p>
+
+<p>Если запускать вручную через <span class="art_cell_gray">java</span>, нужно указывать classpath на <span class="art_cell_gray">out/production/JavaRush_2026</span> (или на <span class="art_cell_gray">src</span>, если компилировали туда).</p>
+</div>
+
+<h4>Кто чистит директорию out</h4>
+
+<p>Директория <span class="art_cell_gray">out</span> может очищаться несколькими способами.</p>
+
+<h5>Способы очистки</h5>
+
+<h6><strong>IDE (IntelliJ IDEA) — автоматически</strong></h6>
+<div class="p_info">
+<p>IDE может чистить <span class="art_cell_gray">out</span> автоматически:</p>
+
+<p>При выполнении <span class="java_red">Build → Clean Project</span> — очищает директорию <span class="art_cell_gray">out</span></p>
+<p>При выполнении <span class="java_red">Build → Rebuild Project</span> — сначала очищает, потом перекомпилирует все заново</p>
+<p>При некоторых настройках — автоматически перед сборкой</p>
+</div>
+
+<h6><strong>Вы вручную</strong></h6>
+<div class="p_info">
+<p>Можно удалить папку <span class="art_cell_gray">out</span> вручную:</p>
+
+<p>Через проводник Windows — просто удалить папку</p>
+<p>Через терминал: <span class="art_cell_gray">rmdir /s /q out</span> (Windows) или <span class="art_cell_gray">rm -rf out</span> (Linux/Mac)</p>
+</div>
+
+<h6><strong>Системы сборки (Maven, Gradle)</strong></h6>
+<div class="p_info">
+<p>Если проект использует Maven или Gradle:</p>
+
+<p><span class="java_tags">Maven:</span> <span class="art_cell_gray">mvn clean</span> — удаляет <span class="art_cell_gray">target/</span> (аналог <span class="art_cell_gray">out</span>)</p>
+<p><span class="java_tags">Gradle:</span> <span class="art_cell_gray">gradle clean</span> — удаляет <span class="art_cell_gray">build/</span> (аналог <span class="art_cell_gray">out</span>)</p>
+</div>
+
+<h5>Важная особенность</h5>
+
+<p>Директория <span class="art_cell_gray">out</span> обычно <strong>не коммитится в Git</strong>. В <span class="art_cell_gray">.gitignore</span> часто есть:</p>
+
+<pre class="line-numbers"><code class="language-java">out/
+target/
+build/
+*.class
+</code></pre>
+
+<p>Это означает:</p>
+
+<p><span class="art_cell_gray">out/</span> не попадает в репозиторий — каждый разработчик компилирует локально</p>
+<p>При клонировании проекта <span class="art_cell_gray">out/</span> пустая, пока не запустите компиляцию</p>
+<p><em>Экономия места</em> в репозитории — не храним временные файлы</p>
+
+<h5>Когда чистить out</h5>
+
+<p>Очистку <span class="art_cell_gray">out</span> стоит делать:</p>
+
+<p>После больших изменений в структуре проекта — чтобы избежать конфликтов старых и новых файлов</p>
+<p>При странных ошибках компиляции — иногда помогает полная перекомпиляция</p>
+<p>Перед созданием финальной сборки — чтобы убедиться, что все свежее</p>
+<p>Когда нужно <span class="java_doc">освободить место на диске</span> — скомпилированные файлы могут занимать много места</p>
+
+<h4>Вывод</h4>
+
+<p><span class="java_tags">Директория out чистится</span> вручную (через IDE или файловую систему) или автоматически при сборке. Это <strong>временная директория</strong>, её можно безопасно удалять — IDE пересоздаст при следующей компиляции.</p>
+
+

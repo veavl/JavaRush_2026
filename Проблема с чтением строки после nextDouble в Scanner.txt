@@ -1,0 +1,106 @@
+<h1>Проблема с чтением строки после nextDouble() в Scanner</h1>
+
+<h4>Суть проблемы</h4>
+
+<p>Когда вы пытаетесь прочитать строку через <span class="art_cell_gray">nextLine()</span> после использования <span class="art_cell_gray">nextDouble()</span>, метод возвращает <strong>пустую строку</strong> вместо ожидаемого значения.</p>
+
+<pre class="line-numbers"><code class="language-java">double d1 = sc.nextDouble();
+double d2 = sc.nextDouble();
+String operation = sc.nextLine(); // Возвращает пустую строку!
+</code></pre>
+
+<h5>Почему это происходит</h5>
+
+<p><span class="java_tags">Механизм работы Scanner:</span></p>
+
+<p><strong>1. Пользователь вводит число и нажимает Enter</strong></p>
+
+<p>Например, пользователь вводит <span class="art_cell_gray">5</span> и нажимает Enter. В буфер попадает: <span class="art_cell_gray">5\n</span> (число + символ переноса строки)</p>
+
+<p><strong>2. nextDouble() читает число</strong></p>
+
+<p>Метод <span class="art_cell_gray">nextDouble()</span> читает только число <span class="art_cell_gray">5</span>, но <em>символ переноса строки</em> <span class="art_cell_gray">\n</span> остается в буфере.</p>
+
+<p><strong>3. nextLine() читает оставшийся символ</strong></p>
+
+<p>Когда вызывается <span class="art_cell_gray">nextLine()</span>, он сразу находит в буфере символ <span class="art_cell_gray">\n</span> и возвращает <span class="java_red">пустую строку</span>, не дожидаясь нового ввода от пользователя.</p>
+
+<h6><strong>Визуализация проблемы</strong></h6>
+<div class="p_info">
+<p>Буфер после каждого шага:</p>
+
+<p>После <span class="art_cell_gray">sc.nextDouble()</span> (первое число): <span class="art_cell_gray">\n</span> остается в буфере</p>
+<p>После <span class="art_cell_gray">sc.nextDouble()</span> (второе число): <span class="art_cell_gray">\n</span> снова остается в буфере</p>
+<p>При вызове <span class="art_cell_gray">sc.nextLine()</span>: сразу читает <span class="art_cell_gray">\n</span> и возвращает пустую строку</p>
+</div>
+
+<h4>Решение проблемы</h4>
+
+<p>Нужно <strong>очистить буфер</strong> от символа переноса строки перед чтением операции.</p>
+
+<h5>Основное решение</h5>
+
+<p>Добавить дополнительный <span class="art_cell_gray">nextLine()</span> после <span class="art_cell_gray">nextDouble()</span>:</p>
+
+<pre class="line-numbers"><code class="language-java">double d1 = sc.nextDouble();
+double d2 = sc.nextDouble();
+sc.nextLine(); // Очищаем буфер от символа переноса строки
+String operation = sc.nextLine();
+</code></pre>
+
+<p><span class="java_doc">Дополнительный nextLine()</span> "съедает" оставшийся символ переноса строки, и следующий <span class="art_cell_gray">nextLine()</span> корректно прочитает новую строку от пользователя.</p>
+
+<h4>Альтернативные решения</h4>
+
+<h6><strong>Вариант 1: Использовать next() вместо nextLine()</strong></h6>
+<div class="p_info">
+<pre class="line-numbers"><code class="language-java">double d1 = sc.nextDouble();
+double d2 = sc.nextDouble();
+String operation = sc.next(); // Читает одно слово до пробела
+</code></pre>
+
+<p><strong>Плюсы:</strong> не нужно очищать буфер, работает сразу</p>
+<p><strong>Минусы:</strong> читает только одно слово, не всю строку</p>
+</div>
+
+<h6><strong>Вариант 2: Читать все через nextLine() и парсить</strong></h6>
+<div class="p_info">
+<pre class="line-numbers"><code class="language-java">String line = sc.nextLine();
+String[] parts = line.split(&quot; &quot;);
+double d1 = Double.parseDouble(parts[0]);
+double d2 = Double.parseDouble(parts[1]);
+String operation = parts[2];
+</code></pre>
+
+<p><strong>Плюсы:</strong> <em>более гибкий подход</em>, можно читать все данные одной строкой</p>
+<p><strong>Минусы:</strong> нужно парсить строку вручную</p>
+</div>
+
+<h6><strong>Вариант 3: Использовать nextLine() для всех вводов</strong></h6>
+<div class="p_info">
+<pre class="line-numbers"><code class="language-java">String input1 = sc.nextLine();
+double d1 = Double.parseDouble(input1);
+
+String input2 = sc.nextLine();
+double d2 = Double.parseDouble(input2);
+
+String operation = sc.nextLine();
+</code></pre>
+
+<p><span class="java_tags">Единообразный подход</span> — все вводы через <span class="art_cell_gray">nextLine()</span>, затем парсинг</p>
+</div>
+
+<h4>Когда возникает эта проблема</h4>
+
+<p>Проблема возникает при <strong>смешивании методов</strong> чтения в Scanner:</p>
+
+<p><span class="art_cell_gray">nextInt()</span>, <span class="art_cell_gray">nextDouble()</span>, <span class="art_cell_gray">next()</span> — <em>не читают символ переноса строки</em></p>
+<p><span class="art_cell_gray">nextLine()</span> — читает всю строку <strong>включая символ переноса</strong></p>
+
+<p>Поэтому после методов типа <span class="art_cell_gray">nextDouble()</span> всегда нужно очищать буфер перед использованием <span class="art_cell_gray">nextLine()</span>.</p>
+
+<h4>Вывод</h4>
+
+<p><span class="java_red">Проблема с пустой строкой</span> возникает из-за того, что методы чтения чисел не потребляют символ переноса строки. Решение — добавить дополнительный <span class="art_cell_gray">nextLine()</span> для очистки буфера или использовать единообразный подход к чтению данных.</p>
+
+
