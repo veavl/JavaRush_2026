@@ -113,3 +113,4 @@ public static void main(String[] args, int num1) {
 
 <p>Нужен пример с жестко заданными значениями для тестирования?</p>
 
+

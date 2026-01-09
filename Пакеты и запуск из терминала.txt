@@ -100,3 +100,4 @@ java -cp src module1.level_01.lecture_05.Calculator
 
 <p><span class="java_tags">Ключевой момент:</span> при работе с пакетами нужно использовать <strong>полное имя класса</strong> (включая пакет) и указывать classpath на директорию, где начинается структура пакетов.</p>
 
+
