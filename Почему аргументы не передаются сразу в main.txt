@@ -1,0 +1,115 @@
+<h1>Почему аргументы не передаются сразу в main</h1>
+
+<h4>Основные причины использования args[]</h4>
+
+<p>Разбираем, почему аргументы берутся из командной строки, а не задаются жестко в коде.</p>
+
+<h5>Гибкость и переиспользование</h5>
+
+<p>Программа работает с <strong>разными входными данными</strong> без изменения кода:</p>
+
+<pre class="line-numbers"><code class="language-java">// Один и тот же код, разные результаты:
+java Calculator 10 + 5    // Результат: 15
+java Calculator 100 * 2   // Результат: 200
+java Calculator 50 / 2    // Результат: 25
+</code></pre>
+
+<h6><strong>Можно задать значения прямо в коде</strong></h6>
+<div class="p_info">
+<p>Если нужно, можно указать значения в теле метода:</p>
+
+<pre class="line-numbers"><code class="language-java">public static void main(String[] args) {
+    // Жестко заданные значения
+    String[] args = {&quot;10&quot;, &quot;+&quot;, &quot;5&quot;};  // ❌ Ошибка! args уже параметр
+    
+    // Правильный способ - создать новый массив:
+    String[] testArgs = {&quot;10&quot;, &quot;+&quot;, &quot;5&quot;};
+    // И использовать testArgs вместо args
+}
+</code></pre>
+
+<p>Или можно <em>переопределить</em> <span class="art_cell_gray">args</span> локально:</p>
+
+<pre class="line-numbers"><code class="language-java">public static void main(String[] args) {
+    args = new String[]{&quot;10&quot;, &quot;+&quot;, &quot;5&quot;};  // Переопределяем args
+    
+    // Остальной код работает как обычно
+    if (args.length &lt; 3) { ... }
+}
+</code></pre>
+</div>
+
+<h5>Почему не в параметрах метода?</h5>
+
+<p>Сигнатура <span class="java_doc">метода main</span> <strong>фиксирована JVM</strong>:</p>
+
+<pre class="line-numbers"><code class="language-java">// ❌ НЕ РАБОТАЕТ - JVM не найдет точку входа:
+public static void main(String[] args, int num1, String op, int num2) {
+    // ...
+}
+
+// ✅ РАБОТАЕТ - стандартная сигнатура:
+public static void main(String[] args) {
+    // args передается из командной строки
+}
+</code></pre>
+
+<p><span class="java_red">JVM ищет метод</span> с точно такой сигнатурой: <span class="art_cell_gray">public static void main(String[] args)</span></p>
+
+<h4>Сравнение подходов</h4>
+
+<h6><strong>Вариант 1: Командная строка (гибко)</strong></h6>
+<div class="p_info">
+<pre class="line-numbers"><code class="language-java">public static void main(String[] args) {
+    // args приходит из командной строки
+    // java Calculator 10 + 5
+}
+</code></pre>
+
+<p><strong>Плюсы:</strong> гибко, можно использовать в скриптах</p>
+<p><strong>Минусы:</strong> нужно передавать аргументы при запуске</p>
+</div>
+
+<h6><strong>Вариант 2: Жестко заданные значения (для теста)</strong></h6>
+<div class="p_info">
+<pre class="line-numbers"><code class="language-java">public static void main(String[] args) {
+    // Переопределяем args для тестирования
+    args = new String[]{&quot;10&quot;, &quot;+&quot;, &quot;5&quot;};
+    
+    // Остальной код...
+}
+</code></pre>
+
+<p><strong>Плюсы:</strong> удобно для тестирования</p>
+<p><strong>Минусы:</strong> нужно менять код для разных значений</p>
+</div>
+
+<h6><strong>Вариант 3: Параметры метода (не работает)</strong></h6>
+<div class="p_info">
+<pre class="line-numbers"><code class="language-java">// ❌ Это не сработает - JVM не найдет точку входа
+public static void main(String[] args, int num1) {
+    // ...
+}
+</code></pre>
+</div>
+
+<h4>Практический пример</h4>
+
+<pre class="line-numbers"><code class="language-java">public static void main(String[] args) {
+    // Для тестирования - можно переопределить:
+    if (args.length == 0) {
+        args = new String[]{&quot;10&quot;, &quot;+&quot;, &quot;5&quot;};  // Значения по умолчанию
+    }
+    
+    // Теперь код работает и с командной строкой, и без неё
+    String arg1 = args[0];
+    // ...
+}
+</code></pre>
+
+<h4>Вывод</h4>
+
+<p><span class="java_tags">args[] - стандартный способ</span> передачи аргументов из командной строки. Сигнатура <span class="art_cell_gray">main</span> <em>фиксирована JVM</em>. Можно задать значения в коде, но это <strong>менее гибко</strong>. Командная строка позволяет использовать программу с <span class="java_red">разными данными</span> без изменения кода.</p>
+
+<p>Нужен пример с жестко заданными значениями для тестирования?</p>
+

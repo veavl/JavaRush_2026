@@ -1,0 +1,102 @@
+<h1>Пакеты и запуск из терминала</h1>
+
+<h4>Проблема с запуском классов в пакетах</h4>
+
+<p>Когда класс объявлен в пакете, например <span class="art_cell_gray">package module1.level_01.lecture_05;</span>, возникает ошибка при запуске:</p>
+
+<pre class="line-numbers"><code class="language-java">Error: Could not find or load main class Calculator
+Caused by: java.lang.NoClassDefFoundError: Calculator (wrong name: module1/level_01/lecture_05/Calculator)
+</code></pre>
+
+<p><strong>Причина ошибки:</strong> Java ищет класс по его <em>полному имени</em>, включая пакет. Если класс находится в пакете <span class="java_doc">module1.level_01.lecture_05</span>, то при запуске нужно указывать <span class="java_red">полное имя класса</span> и правильный classpath.</p>
+
+<h5>Что такое classpath (-cp)</h5>
+
+<p><span class="art_cell_gray">-cp</span> — это сокращение от <span class="art_cell_gray">-classpath</span>. Это опция командной строки Java, которая указывает, <strong>где искать скомпилированные классы</strong> (<span class="art_cell_gray">.class</span> файлы).</p>
+
+<h6><strong>Как работает classpath</strong></h6>
+<div class="p_info">
+<p>Команда выглядит так:</p>
+
+<pre class="line-numbers"><code class="language-java">java -cp &lt;путь_к_директории&gt; &lt;полное_имя_класса&gt;
+</code></pre>
+
+<p><strong>Пример:</strong></p>
+
+<pre class="line-numbers"><code class="language-java">java -cp C:\Users\Hi\IdeaProjects\JavaRush_2026\src module1.level_01.lecture_05.Calculator
+</code></pre>
+
+<p>Здесь <span class="java_tags">-cp указывает корневую директорию</span>, где начинается структура пакетов, а <span class="art_cell_gray">module1.level_01.lecture_05.Calculator</span> — полное имя класса с пакетом.</p>
+</div>
+
+<h6><strong>Почему это нужно</strong></h6>
+<div class="p_info">
+<p>Когда класс в пакете, Java ищет его по структуре пакетов:</p>
+
+<p>Класс: <span class="art_cell_gray">module1.level_01.lecture_05.Calculator</span></p>
+<p>Путь: <span class="art_cell_gray">src/module1/level_01/lecture_05/Calculator.class</span></p>
+
+<p>Если запускать из директории <span class="art_cell_gray">src/module1/level_01/lecture_05</span>, Java не знает, где начинается структура пакетов. <span class="java_doc">Опция -cp указывает корневую директорию</span> (<span class="art_cell_gray">src</span>), откуда начинается поиск.</p>
+</div>
+
+<h4>Запуск из текущей директории</h4>
+
+<p>Если вы находитесь в директории <span class="art_cell_gray">C:\Users\Hi\IdeaProjects\JavaRush_2026\src\module1\level_01\lecture_05</span>, то для запуска нужно указать classpath на директорию <span class="art_cell_gray">src</span> и использовать полное имя класса.</p>
+
+<h6><strong>Команда с абсолютным путем</strong></h6>
+<div class="p_info">
+<pre class="line-numbers"><code class="language-java">java -cp C:\Users\Hi\IdeaProjects\JavaRush_2026\src module1.level_01.lecture_05.Calculator
+</code></pre>
+</div>
+
+<h6><strong>Команда с относительным путем</strong></h6>
+<div class="p_info">
+<pre class="line-numbers"><code class="language-java">java -cp ..\..\..\.. module1.level_01.lecture_05.Calculator
+</code></pre>
+
+<p>Здесь <span class="art_cell_gray">..\..\..\..</span> поднимается на 4 уровня вверх от текущей директории до <span class="art_cell_gray">src</span>.</p>
+</div>
+
+<h5>Альтернативные варианты</h5>
+
+<p>Можно использовать полную форму команды:</p>
+
+<pre class="line-numbers"><code class="language-java">java -classpath C:\Users\Hi\IdeaProjects\JavaRush_2026\src module1.level_01.lecture_05.Calculator
+</code></pre>
+
+<p><span class="art_cell_gray">-cp</span> и <span class="art_cell_gray">-classpath</span> — это одно и то же, <span class="art_cell_gray">-cp</span> просто короче.</p>
+
+<h4>Простое решение: убрать package</h4>
+
+<p>Если пакет не обязателен для вашего проекта, можно <em>убрать объявление пакета</em> из файла. Тогда класс можно запускать просто:</p>
+
+<pre class="line-numbers"><code class="language-java">javac Calculator.java
+java Calculator
+</code></pre>
+
+<p><strong>Что изменится:</strong></p>
+
+<p>Убирается строка <span class="art_cell_gray">package module1.level_01.lecture_05;</span>. Класс больше не находится в пакете, поэтому можно запускать из текущей директории без указания classpath и полного имени класса.</p>
+
+<h6><strong>Когда использовать package</strong></h6>
+<div class="p_info">
+<p>Пакеты нужны для:</p>
+
+<p><strong>Организации кода</strong> — структурирование проекта по модулям и уровням</p>
+<p><strong>Избежания конфликтов имен</strong> — классы с одинаковыми именами могут существовать в разных пакетах</p>
+<p><strong>Контроля доступа</strong> — пакеты влияют на видимость классов</p>
+
+<p>Если пакет нужен для структуры проекта, его придется оставить и запускать из корня проекта с полным именем класса.</p>
+</div>
+
+<h4>Правильный запуск с пакетом</h4>
+
+<p>Если пакет обязателен, запускайте из корня проекта:</p>
+
+<pre class="line-numbers"><code class="language-java">cd C:\Users\Hi\IdeaProjects\JavaRush_2026
+javac src/module1/level_01/lecture_05/Calculator.java
+java -cp src module1.level_01.lecture_05.Calculator
+</code></pre>
+
+<p><span class="java_tags">Ключевой момент:</span> при работе с пакетами нужно использовать <strong>полное имя класса</strong> (включая пакет) и указывать classpath на директорию, где начинается структура пакетов.</p>
+
