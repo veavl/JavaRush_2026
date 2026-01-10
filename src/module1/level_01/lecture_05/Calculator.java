@@ -9,22 +9,49 @@ public class Calculator {
         System.out.println("Поочередно ведите, два числа и выражение для вычисления. " +
                 "\nНапример '3', '2' и умножить '*'");
 
+        Scanner sc = new Scanner(System.in);
+
+        double d1;
         while (true) {
-            Scanner sc = new Scanner(System.in);
-
             System.out.print("Введите число №1: ");
-            double d1 = sc.nextDouble();
-            System.out.print("Введите число №2: ");
-            double d2 = sc.nextDouble();
+            String string1 = sc.nextLine();
+            if (string1.isEmpty()) {
+                System.out.println("Пустая строка!");
+                continue;
+            }
+            try {
+                d1 = Double.parseDouble(string1);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Ошибка! Введите число.");
+            }
+        }
 
-            sc.nextLine(); // Очищаем буфер от символа переноса строки. Альтернатива: считывать ВСЕ в строки
+        double d2;
+        while (true) {
+            System.out.print("Введите число №2: ");
+            String string2 = sc.nextLine();
+            if (string2.isEmpty()) {
+                System.out.println("Пустая строка!");
+                continue;
+            }
+            try {
+                d2 = Double.parseDouble(string2);
+                break;
+            } catch (NumberFormatException e) {
+                System.out.println("Ошибка! Введите число.");
+            }
+        }
+
+        double result = 0;
+        while (true) {
             System.out.print("Введите выражение: ");
             String operation = sc.nextLine();
 
-            
-
-            double result = 0;
-
+            if (operation.equals("/") && d2 == 0) {
+                System.out.println("Ошибка! Декление на ноль не возможно. Введите другое выражение");
+                continue;
+            }
             if (operation.equals("*"))
                 result = d1 * d2;
             else if (operation.equals("+"))
@@ -35,8 +62,11 @@ public class Calculator {
                 result = d1 - d2;
             else {
                 System.out.println("Неизвестная операция");
-                return;
+                continue;
             }
+            break;
+        }
+        System.out.println("Результат: " + result);
 
 //            switch (operation) {
 //                case "+":
@@ -56,7 +86,5 @@ public class Calculator {
 //                    return;
 //            }
 
-            System.out.println(result);
-        }
     }
 }
