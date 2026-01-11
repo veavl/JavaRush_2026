@@ -1,6 +1,24 @@
 <h1>Пакеты и запуск из терминала</h1>
 
-<h4>Проблема с запуском классов в пакетах</h4>
+<ul>
+<li style="list-style-image:url(../../img/i_9_10.png)">
+	<a style='color:#333' href='#1'>Проблема с запуском классов в пакетах</a>
+</li>
+<li style="list-style-image:url(../../img/i_9_10.png)">
+	<a style='color:#333' href='#2'>Запуск из текущей директории</a>
+</li>
+<li style="list-style-image:url(../../img/i_9_10.png)">
+	<a style='color:#333' href='#3'>Простое решение: убрать package</a>
+</li>
+<li>
+	<a style='color:#F00' href='#5'>Переместить файл в корень src\</a>
+</li>
+<li style="list-style-image:url(../../img/i_9_10.png)">
+	<a style='color:#333' href='#6'>Правильный запуск с пакетом</a>
+</li>
+</ul>
+
+<h4 id="1">Проблема с запуском классов в пакетах</h4>
 
 <p>Когда класс объявлен в пакете, например <span class="art_cell_gray">package module1.level_01.lecture_05;</span>, возникает ошибка при запуске:</p>
 
@@ -39,7 +57,7 @@ Caused by: java.lang.NoClassDefFoundError: Calculator (wrong name: module1/level
 <p>Если запускать из директории <span class="art_cell_gray">src/module1/level_01/lecture_05</span>, Java не знает, где начинается структура пакетов. <span class="java_doc">Опция -cp указывает корневую директорию</span> (<span class="art_cell_gray">src</span>), откуда начинается поиск.</p>
 </div>
 
-<h4>Запуск из текущей директории</h4>
+<h4 id="2">Запуск из текущей директории</h4>
 
 <p>Если вы находитесь в директории <span class="art_cell_gray">C:\Users\Hi\IdeaProjects\JavaRush_2026\src\module1\level_01\lecture_05</span>, то для запуска нужно указать classpath на директорию <span class="art_cell_gray">src</span> и использовать полное имя класса.</p>
 
@@ -66,7 +84,7 @@ Caused by: java.lang.NoClassDefFoundError: Calculator (wrong name: module1/level
 
 <p><span class="art_cell_gray">-cp</span> и <span class="art_cell_gray">-classpath</span> — это одно и то же, <span class="art_cell_gray">-cp</span> просто короче.</p>
 
-<h4>Простое решение: убрать package</h4>
+<h4 id="3">Простое решение: убрать package</h4>
 
 <p>Если пакет не обязателен для вашего проекта, можно <em>убрать объявление пакета</em> из файла. Тогда класс можно запускать просто:</p>
 
@@ -89,7 +107,34 @@ java Calculator
 <p>Если пакет нужен для структуры проекта, его придется оставить и запускать из корня проекта с полным именем класса.</p>
 </div>
 
-<h4>Правильный запуск с пакетом</h4>
+<h3 id="5">Переместить файл в корень src\</h3>
+
+<p>Альтернативный вариант — переместить файл в корень директории <span class="art_cell_gray">src\</span>. Это избавит от предупреждений IDE и не требует указания package.</p>
+
+<p><strong>Что сделать:</strong></p>
+
+<p>1. Переместить файл <span class="art_cell_gray">CalcArgsCommand.java</span> из <span class="art_cell_gray">src\module1\level_01\lecture_05\</span> в <span class="art_cell_gray">src\</span></p>
+
+<p>2. Убедиться, что строка package закомментирована или удалена</p>
+
+<p>3. Компилировать и запускать из директории <span class="art_cell_gray">src\</span>:</p>
+
+<pre class="line-numbers"><code class="language-java">cd C:\Users\user\IdeaProjects\JavaRush_2026\src
+javac CalcArgsCommand.java
+java CalcArgsCommand
+</code></pre>
+
+<p><strong>Преимущества:</strong></p>
+
+<p>• Никаких предупреждений IDE о missing package</p>
+<p>• Простой запуск без classpath и полного имени класса</p>
+<p>• Структура директорий не предполагает package</p>
+
+<p><strong>Когда использовать:</strong></p>
+
+<p>Если пакет не нужен для организации кода и это учебный проект, перемещение в корень <span class="art_cell_gray">src\</span> — самый простой вариант.</p>
+
+<h4 id="6">Правильный запуск с пакетом</h4>
 
 <p>Если пакет обязателен, запускайте из корня проекта:</p>
 

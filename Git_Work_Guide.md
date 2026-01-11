@@ -70,7 +70,14 @@ git commit -m "Исправлена ошибка"
 
 ### Проверка подключенных репозиториев
 ```bash
+# Показать все удаленные репозитории с URL
 git remote -v
+
+# Показать только URL для origin
+git remote get-url origin
+
+# Детальная информация об origin
+git remote show origin
 ```
 Показывает список удаленных репозиториев (обычно `origin`).
 
@@ -113,6 +120,25 @@ git push -u origin master
 ```
 
 Флаг `-u` (или `--set-upstream`) связывает локальную ветку с удаленной.
+
+**Ошибка "The current branch has no upstream branch":**
+Если локальная ветка не связана с удаленной:
+```bash
+git push --set-upstream origin master
+# или короче
+git push -u origin master
+```
+
+**Если локальная и удаленная ветки имеют разные имена:**
+```bash
+# Пушить локальную main в удаленную master
+git push -u origin main:master
+```
+
+**Автоматическая настройка upstream для новых веток:**
+```bash
+git config --global push.autoSetupRemote true
+```
 
 ---
 
@@ -259,6 +285,19 @@ git branch -r  # Показать удаленные ветки
 Используйте правильное название:
 ```bash
 git pull origin master  # Если ветка называется master
+```
+
+### Ошибка "The current branch has no upstream branch"
+Локальная ветка не связана с удаленной. Решение:
+```bash
+git push -u origin master  # Для master
+git push -u origin main    # Для main
+```
+
+Если локальная ветка называется иначе чем удаленная:
+```bash
+git push -u origin локальная-ветка:удаленная-ветка
+# Пример: git push -u origin main:master
 ```
 
 ---

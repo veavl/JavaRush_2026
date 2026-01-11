@@ -1,6 +1,6 @@
 package module1.level_01.lecture_05;
 
-import java.util.Scanner;
+import java.util.Scanner;       // ++ 'ОДОБРЕНО КУ' -- ЭТИ КОММЕНТЫ КУ ОДОБРИЛ - ОСТАЛЬНЫЕ ИЗБЫТОЧНЫЕ
 
 public class Calculator {
 
@@ -12,22 +12,22 @@ public class Calculator {
         Scanner sc = new Scanner(System.in);
 
         double d1;
-        while (true) {
+        while (true) {                              // ЭТОТ ЦИКЛ ПРЕРВЕТСЯ ТОЛЬКО BREAK-ОМ ++ 'ОДОБРЕНО КУ'
             System.out.print("Введите число №1: ");
             String string1 = sc.nextLine();
-            if (string1.isEmpty()) {
+            if (string1.isEmpty()) {                // ПРИ ПУСТОЙ СТРОКЕ...
                 System.out.println("Пустая строка!");
-                continue;
+                continue;                           // ... ВОЗВРАЩАЕМСЯ В НАЧАЛО ЦИКЛА
             }
-            try {
-                d1 = Double.parseDouble(string1);
-                break;
-            } catch (NumberFormatException e) {
-                System.out.println("Ошибка! Введите число.");
+            try {                                   // ПРОБУЕМ
+                d1 = Double.parseDouble(string1);   // ЕСЛИ ПОЛУЧАЕТСЯ ПАРСИНГ СТРОКИ В ЧИСЛО...
+                break;                              // ... BREAK - КОНЕЦ ЦИКЛА
+            } catch (NumberFormatException e) {     // ИНАЧЕ
+                System.out.println("Ошибка! Введите число."); // ВЫВОДИМ СООБЩЕНИЕ И ЦИКЛ ПРОДОЛЖАЕТСЯ
             }
         }
 
-        double d2;
+        double d2;                              // АНАЛОГИЧНЫЙ ЦИКЛ КАК И ДЛЯ d1 ++ 'ОДОБРЕНО КУ'
         while (true) {
             System.out.print("Введите число №2: ");
             String string2 = sc.nextLine();
@@ -44,13 +44,13 @@ public class Calculator {
         }
 
         double result = 0;
-        while (true) {
+        while (true) {          // ЦИКЛ ДЛЯ ПРОВЕРКИ И ПОЛУЧЕНИЯ АРИФ. ОПЕРАЦИИ - ВЫРАЖЕНИЯ ++ 'ОДОБРЕНО КУ'
             System.out.print("Введите выражение: ");
             String operation = sc.nextLine();
-
-            if (operation.equals("/") && d2 == 0) {
+                                                        // ++ 'ОДОБРЕНО КУ'
+            if (operation.equals("/") && d2 == 0) {     // ЕСЛИ МЫ ДЕЛИМ И ВТОРОЕ ЧИСЛО РАВНО 0 ...
                 System.out.println("Ошибка! Декление на ноль не возможно. Введите другое выражение");
-                continue;
+                continue;                               // ... ВОЗВРАТ В НАЧАЛО ЦИКЛА
             }
             if (operation.equals("*"))
                 result = d1 * d2;
@@ -61,8 +61,8 @@ public class Calculator {
             else if (operation.equals("-"))
                 result = d1 - d2;
             else {
-                System.out.println("Неизвестная операция");
-                continue;
+                System.out.println("Неизвестная операция");     // ЕСЛИ ВВЕЛИ НЕ АРИФ. ОПЕРЦИЮ ...
+                continue;                                       // ... ВОЗВРАЩАЕМСЯ В НАЧАЛО ЦИКЛА
             }
             break;
         }
