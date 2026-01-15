@@ -1,0 +1,133 @@
+<h1>Выбор и установка Java 21 LTS для разработки</h1>
+
+<h2>Тема обсуждения</h2>
+<p>Выбор версии <span class="java_red">JDK</span> для нового проекта в <span class="java_tags">IntelliJ IDEA</span> и установка <span class="java_red">Java 21 LTS</span>.</p>
+
+<h2>Основные вопросы и ответы</h2>
+
+<h4>1. Выбор версии JDK</h4>
+
+<h6><strong>Проблема:</strong></h6>
+<p>При создании проекта в <span class="java_tags">IntelliJ IDEA</span> доступны <span class="java_red">JDK 17</span> и <span class="java_red">JDK 22</span>, но нет <span class="java_red">JDK 21</span>.</p>
+
+<h6><strong>Рекомендация:</strong></h6>
+<p>Выбрать <span class="java_red">Java 21 LTS</span> для новых проектов в <strong>2025 году</strong>.</p>
+
+<h6><strong>Почему Java 21 лучше Java 17:</strong></h6>
+<p>Более новая <span class="java_doc">LTS версия</span> (выпущена в <em>2023</em>). Будет поддерживаться <strong>дольше</strong>. Больше современных возможностей: <span class="java_tags">Virtual Threads</span>, <span class="java_tags">Pattern Matching</span>, <span class="java_tags">Records</span> и др. К <em>2025 году</em> уже <strong>хорошо поддерживается</strong> экосистемой.</p>
+
+<h6><strong>Почему не JDK 22:</strong></h6>
+<p><span class="java_red">JDK 22</span> — это <em>не LTS версия</em>. Поддержка прекращается после выхода следующей версии. Не подходит для <strong>долгосрочных проектов</strong>.</p>
+
+<h4>2. Что такое LTS?</h4>
+
+<h6><strong>LTS</strong></h6>
+<p><span class="java_doc">Long Term Support</span> (долгосрочная поддержка).</p>
+
+<h6><strong>LTS версии Java:</strong></h6>
+<p>Получают обновления безопасности и исправления в течение <strong>длительного времени</strong>. Подходят для <em>продакшена</em> и долгосрочных проектов. Стабильны и предсказуемы.</p>
+
+<h6><strong>Текущие LTS версии:</strong></h6>
+<p><span class="java_red">Java 8</span> (<em>2014</em>), <span class="java_red">Java 11</span> (<em>2018</em>), <span class="java_red">Java 17</span> (<em>2021</em>), <span class="java_red">Java 21</span> (<em>2023</em>) — <strong>новейшая LTS</strong>.</p>
+
+<h6><strong>Не-LTS версии:</strong></h6>
+<p>Выпускаются каждые <em>6 месяцев</em>. Поддержка прекращается после выхода следующей версии. Подходят для <em>экспериментов</em>.</p>
+
+<h4>3. Откуда скачать Java 21 LTS</h4>
+
+<h2>Рекомендуемый вариант: Eclipse Temurin (Adoptium)</h2>
+
+<h6><strong>Сайт:</strong></h6>
+<p><span class="art_cell_gray">https://adoptium.net/</span></p>
+
+<h6><strong>Прямая ссылка:</strong></h6>
+<p><span class="art_cell_gray">https://adoptium.net/temurin/releases/?version=21</span></p>
+
+<h6><strong>Выбор:</strong></h6>
+<p><span class="java_tags">Windows x64</span>, <span class="java_red">JDK 21</span>, <span class="java_doc">LTS</span></p>
+
+<h6><strong>Преимущества:</strong></h6>
+<p>Полностью <strong>бесплатный</strong>, без регистрации. Широко используется сообществом. Управляется <span class="java_tags">Eclipse Foundation</span> (нейтральная организация). Регулярные обновления безопасности. Подходит для <em>коммерческого использования</em>.</p>
+
+<h6><strong>Почему Eclipse Temurin рекомендуется:</strong></h6>
+<p>Прямой наследник <span class="java_tags">AdoptOpenJDK</span> (популярного источника <span class="java_red">OpenJDK</span>). Полностью бесплатный и открытый, без скрытых ограничений. Не требует регистрации. Широкое распространение и хорошее тестирование. Качественные сборки с регулярными обновлениями безопасности. Нейтральность (управляется <span class="java_tags">Eclipse Foundation</span>, не привязан к конкретному вендору).</p>
+
+<h2>Альтернативные варианты:</h2>
+
+<h6><strong>1. Microsoft Build of OpenJDK</strong></h6>
+<p>Сайт: <span class="art_cell_gray">https://www.microsoft.com/openjdk</span></p>
+<p>Прямая ссылка: <span class="art_cell_gray">https://learn.microsoft.com/en-us/java/openjdk/download#openjdk-21</span></p>
+<p>Оптимизирован для <strong>Windows</strong>.</p>
+
+<h6><strong>2. Amazon Corretto</strong></h6>
+<p>Сайт: <span class="art_cell_gray">https://aws.amazon.com/corretto/</span></p>
+<p>Прямая ссылка: <span class="art_cell_gray">https://docs.aws.amazon.com/corretto/latest/corretto-21-ug/downloads-list.html</span></p>
+<p>Бесплатный, без регистрации.</p>
+
+<h6><strong>3. Oracle JDK</strong></h6>
+<p>Сайт: <span class="art_cell_gray">https://www.oracle.com/java/technologies/downloads/#java21</span></p>
+<p>Может потребовать лицензию для <em>коммерческого использования</em>. Требует учетную запись <strong>Oracle</strong>.</p>
+
+<h4>4. Установка через IntelliJ IDEA</h4>
+
+<p>В диалоге создания проекта:</p>
+<p>Нажмите <span class="art_cell_gray">"Download JDK..."</span>. Выберите версию <strong>21</strong>. Выберите поставщика (например, <span class="java_tags">Eclipse Temurin</span>). Нажмите <span class="art_cell_gray">"Download"</span>.</p>
+
+<p>После установки <span class="java_tags">IntelliJ IDEA</span> автоматически обнаружит <span class="java_red">JDK</span>, или добавьте его вручную через <span class="art_cell_gray">"Add JDK..."</span> в диалоге создания проекта.</p>
+
+<h4>5. Установка вручную (распаковка MSI или ZIP)</h4>
+
+<h2>Вариант 1: Скачать ZIP версию (рекомендуется)</h2>
+
+<p>На сайте <span class="java_tags">Adoptium</span>:</p>
+<p>Выберите формат: <strong>ZIP</strong> (вместо MSI). Скачайте: <span class="art_cell_gray">OpenJDK21U-jdk_x64_windows_hotspot_21.0.9_10.zip</span>. Распакуйте ZIP в <span class="art_cell_gray">C:\jdk-21.0.9_10\</span> — получите правильную структуру.</p>
+
+<h6><strong>Преимущества ZIP:</strong></h6>
+<p>Не требует прав администратора. Можно иметь несколько версий <span class="java_red">JDK</span> одновременно. Легче управлять версиями. Не засоряет системные папки. Простая распаковка обычным архиватором.</p>
+
+<h2>Вариант 2: Распаковка MSI файла</h2>
+
+<p>Если скачали MSI файл (<span class="art_cell_gray">OpenJDK21U-jdk_x64_windows_hotspot_21.0.9_10.msi</span>), можно распаковать его вместо установки.</p>
+
+<h6><strong>Через командную строку (CMD):</strong></h6>
+<p><span class="art_cell_gray">msiexec /a "путь\к\OpenJDK21U-jdk_x64_windows_hotspot_21.0.9_10.msi" /qb TARGETDIR="C:\jdk-21.0.9_10"</span></p>
+
+<h6><strong>Пример:</strong></h6>
+<p><span class="art_cell_gray">msiexec /a "D:\Downloads\OpenJDK21U-jdk_x64_windows_hotspot_21.0.9_10.msi" /qb TARGETDIR="C:\jdk-21.0.9_10"</span></p>
+
+<h6><strong>Параметры команды:</strong></h6>
+<p><span class="art_cell_gray">/a</span> — административная установка (распаковка). <span class="art_cell_gray">/qb</span> — тихий режим (без диалогов). <span class="art_cell_gray">TARGETDIR</span> — папка назначения.</p>
+
+<h6><strong>Важно:</strong></h6>
+<p>Запустите CMD от имени администратора (правый клик → <em>"Запуск от имени администратора"</em>). Укажите полный путь к MSI файлу. Папка <span class="art_cell_gray">C:\jdk-21.0.9_10</span> будет создана автоматически.</p>
+
+<h6><strong>Альтернативные способы распаковки MSI:</strong></h6>
+<p>Использовать утилиту <span class="java_tags">LessMSI</span>: <span class="art_cell_gray">https://lessmsi.activescott.com/</span>. Открыть MSI в <span class="java_tags">LessMSI</span>, выбрать все файлы и извлечь в нужную папку.</p>
+
+<h6><strong>Примечание:</strong></h6>
+<p>MSI — это не обычный архив. Внутри него база данных установки с зашифрованными именами файлов. Простое открытие через <em>7-Zip/WinRAR</em> не даст нужную структуру. Поэтому рекомендуется использовать <strong>ZIP версию</strong> или команду <span class="art_cell_gray">msiexec</span>.</p>
+
+<h2>После распаковки (ZIP или MSI):</h2>
+
+<p>Структура должна быть примерно такой:</p>
+<p><span class="art_cell_gray">C:\jdk-21.0.9_10\
+├── bin\
+├── lib\
+├── include\
+├── conf\
+└── ...</span></p>
+
+<h6><strong>Добавление JDK в IntelliJ IDEA:</strong></h6>
+<p>При создании проекта: <span class="art_cell_gray">"Add JDK..."</span> → выберите папку <span class="art_cell_gray">C:\jdk-21.0.9_10</span>. Или в настройках проекта: <span class="art_cell_gray">File → Project Structure → SDKs → Add SDK → JDK</span> → укажите путь.</p>
+
+<h2>Итоговые рекомендации</h2>
+
+<p>Для новых проектов в <strong>2025 году</strong>: Используйте <span class="java_red">Java 21 LTS</span>.</p>
+<p>Источник для скачивания: <span class="java_tags">Eclipse Temurin</span> (Adoptium) — <span class="art_cell_gray">https://adoptium.net/</span>.</p>
+<p>Платформа: <span class="java_tags">Windows x64</span>.</p>
+<p>Формат: <strong>ZIP</strong> (рекомендуется) или MSI.</p>
+<p>Установка: Через <span class="java_tags">IntelliJ IDEA</span> (<span class="art_cell_gray">"Download JDK..."</span>) — <em>самый простой способ</em>. Или вручную: распакуйте ZIP в <span class="art_cell_gray">C:\jdk-21.0.9_10\</span> и добавьте в <span class="java_tags">IntelliJ IDEA</span> через <span class="art_cell_gray">"Add JDK..."</span>.</p>
+
+<h2>Дата обсуждения</h2>
+<p>2025 год</p>
+

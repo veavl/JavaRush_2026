@@ -1,0 +1,250 @@
+<h1>Настройка JAVA_HOME и решение проблем с PATH</h1>
+
+<h2>Тема обсуждения</h2>
+<p>Установка <span class="java_red">Java 21 LTS</span>, настройка переменных окружения <span class="java_tags">JAVA_HOME и PATH</span>, решение проблемы с неправильной версией <span class="java_red">Java</span> в командной строке.</p>
+
+<h4>1. Распаковка MSI файла вместо установки</h4>
+
+<h6><strong>Скачанный файл:</strong></h6>
+<p><span class="art_cell_gray">OpenJDK21U-jdk_x64_windows_hotspot_21.0.9_10.msi</span></p>
+
+<h6><strong>Проблема:</strong></h6>
+<p>MSI файл <em>нельзя просто открыть</em> как архив - он содержит <strong>базу данных установки</strong> с зашифрованными именами файлов.</p>
+
+<h6><strong>Преимущества распаковки вместо установки:</strong></h6>
+<p>Не требует прав администратора</p>
+<p>Можно иметь <span class="java_doc">несколько версий JDK</span> одновременно</p>
+<p>Легче управлять версиями</p>
+<p>Не засоряет системные папки</p>
+
+<h6><strong>Способы распаковки MSI:</strong></h6>
+
+<h2>Вариант 1: Через командную строку (CMD)</h2>
+<p><span class="art_cell_gray">msiexec /a "путь\к\OpenJDK21U-jdk_x64_windows_hotspot_21.0.9_10.msi" /qb TARGETDIR="C:\jdk-21.0.9_10"</span></p>
+
+<h6><strong>Параметры:</strong></h6>
+<p><span class="art_cell_gray">/a</span> - административная установка (распаковка)</p>
+<p><span class="art_cell_gray">/qb</span> - тихий режим (без диалогов)</p>
+<p><span class="art_cell_gray">TARGETDIR</span> - папка назначения</p>
+
+<h6><strong>Важно:</strong></h6>
+<p>Запустите CMD <strong>от имени администратора</strong>.</p>
+
+<h2>Вариант 2: Использовать ZIP версию (рекомендуется)</h2>
+<p>Скачайте ZIP версию с сайта Adoptium</p>
+<p>Распакуйте обычным архиватором в <span class="art_cell_gray">C:\jdk-21.0.9_10\</span></p>
+<p><em>Проще и быстрее</em></p>
+
+<h2>Вариант 3: Использовать утилиту LessMSI</h2>
+<p>Скачайте: https://lessmsi.activescott.com/</p>
+<p>Откройте MSI в LessMSI</p>
+<p>Извлеките все файлы в целевую папку</p>
+
+<h6><strong>Структура после распаковки:</strong></h6>
+<p><span class="art_cell_gray">C:\jdk-21.0.9_10\<br>├── bin\<br>├── lib\<br>├── include\<br>├── conf\<br>└── ...</span></p>
+
+<h4>2. Настройка переменной JAVA_HOME</h4>
+
+<h6><strong>Что такое JAVA_HOME:</strong></h6>
+<p>Системная переменная окружения</p>
+<p>Указывает, <span class="java_doc">какая версия Java</span> используется по умолчанию</p>
+<p>Используется многими инструментами и приложениями</p>
+
+<h6><strong>Как установить JAVA_HOME:</strong></h6>
+
+<h2>Способ 1: Через графический интерфейс</h2>
+<p>1. Нажмите <span class="art_cell_gray">Win + Pause</span> (или ПКМ на "Этот компьютер" → "Свойства")</p>
+<p>2. "Дополнительные параметры системы"</p>
+<p>3. "Переменные среды"</p>
+<p>4. В "Системные переменные" найдите <span class="art_cell_gray">JAVA_HOME</span> (или создайте новую)</p>
+<p>5. Установите значение: <span class="art_cell_gray">C:\jdk-21.0.9_10</span></p>
+<p>6. Нажмите "ОК"</p>
+
+<h2>Способ 2: Через командную строку (от администратора)</h2>
+<p><span class="art_cell_gray">setx JAVA_HOME "C:\jdk-21.0.9_10" /M</span></p>
+
+<h6><strong>Проверка:</strong></h6>
+<p><span class="art_cell_gray">echo %JAVA_HOME%</span></p>
+<p>Должно показать: <span class="art_cell_gray">C:\jdk-21.0.9_10</span></p>
+
+<h4>3. Настройка переменной PATH</h4>
+
+<h6><strong>Важно:</strong></h6>
+<p>В переменной <span class="art_cell_gray">Path</span> должна быть запись <span class="art_cell_gray">%JAVA_HOME%\bin</span></p>
+
+<h6><strong>Как проверить и настроить:</strong></h6>
+
+<p>1. Откройте "Переменные среды"</p>
+<p>2. В "Системные переменные" найдите <span class="art_cell_gray">Path</span></p>
+<p>3. Нажмите "Изменить..."</p>
+<p>4. Проверьте наличие <span class="art_cell_gray">%JAVA_HOME%\bin</span></p>
+<p>5. Если нет - добавьте через "Создать"</p>
+<p>6. Если есть - убедитесь, что он находится в начале списка</p>
+
+<h6><strong>Почему порядок важен:</strong></h6>
+<p><span class="java_tags">Windows ищет программы</span> по порядку в PATH слева направо. Если <span class="art_cell_gray">%JAVA_HOME%\bin</span> находится после других путей, где есть <span class="art_cell_gray">java.exe</span>, будет использоваться та версия <span class="java_red">Java</span>.</p>
+
+<h4>4. Переключение между версиями Java</h4>
+
+<h2>4.1. Как переключаться между версиями Java</h2>
+
+<h6><strong>Принцип работы:</strong></h6>
+<p>На диске могут лежать несколько версий JDK: <span class="art_cell_gray">C:\jdk-17.0.12\</span>, <span class="art_cell_gray">C:\jdk-21.0.9_10\</span>, <span class="art_cell_gray">C:\jdk-22.0.2\</span> и т.д.</p>
+<p>Переменная <span class="art_cell_gray">JAVA_HOME</span> указывает только на <strong>одну активную версию</strong> в данный момент</p>
+<p>В <span class="art_cell_gray">PATH</span> используется <span class="art_cell_gray">%JAVA_HOME%\bin</span>, который <span class="java_doc">автоматически ссылается</span> на активную версию</p>
+<p>Другие версии просто лежат на диске и <strong>не используются</strong>, пока <span class="art_cell_gray">JAVA_HOME</span> не укажет на них</p>
+
+<h6><strong>Как переключиться на другую версию:</strong></h6>
+
+<h2>Способ 1: Через графический интерфейс</h2>
+<p>1. Откройте "Переменные среды" (<span class="art_cell_gray">Win + Pause</span> → "Дополнительные параметры системы" → "Переменные среды")</p>
+<p>2. В "Системные переменные" найдите <span class="art_cell_gray">JAVA_HOME</span></p>
+<p>3. Нажмите "Изменить..."</p>
+<p>4. Измените значение на путь к нужной версии:</p>
+<p>Для <span class="java_red">Java 17</span>: <span class="art_cell_gray">C:\jdk-17.0.12</span></p>
+<p>Для <span class="java_red">Java 21</span>: <span class="art_cell_gray">C:\jdk-21.0.9_10</span></p>
+<p>Для <span class="java_red">Java 22</span>: <span class="art_cell_gray">C:\jdk-22.0.2</span></p>
+<p>5. Нажмите "ОК" во всех окнах</p>
+<p>6. <strong>Важно:</strong> Закройте все окна командной строки и откройте новую</p>
+
+<h2>Способ 2: Через командную строку (от администратора)</h2>
+<p><span class="art_cell_gray">setx JAVA_HOME "C:\jdk-17.0.12" /M</span></p>
+<p>Или для другой версии:</p>
+<p><span class="art_cell_gray">setx JAVA_HOME "C:\jdk-21.0.9_10" /M</span></p>
+
+<h6><strong>Важно:</strong></h6>
+<p>После изменения <span class="art_cell_gray">JAVA_HOME</span> обязательно:</p>
+<p>1. Закройте все окна CMD/PowerShell</p>
+<p>2. Откройте новую командную строку</p>
+<p>3. Проверьте версию: <span class="art_cell_gray">java -version</span></p>
+
+<h6><strong>Пример структуры на диске:</strong></h6>
+<p><span class="art_cell_gray">C:\<br>├── jdk-17.0.12\          ← лежит, но не используется (если JAVA_HOME указывает на другую версию)<br>├── jdk-21.0.9_10\        ← активная версия (если JAVA_HOME = C:\jdk-21.0.9_10)<br>└── jdk-22.0.2\           ← лежит, но не используется</span></p>
+
+<h6><strong>Проверка активной версии:</strong></h6>
+<p><span class="art_cell_gray">echo %JAVA_HOME%<br>java -version<br>where java</span></p>
+
+<h6><strong>Преимущества такого подхода:</strong></h6>
+<p>Все версии доступны на диске</p>
+<p><span class="java_tags">Переключение занимает секунды</span> (изменение одной переменной)</p>
+<p>Не нужно переустанавливать <span class="java_red">Java</span></p>
+<p>Можно быстро вернуться к предыдущей версии</p>
+
+<h2>4.2. Как IDEA переключается между версиями Java</h2>
+
+<h6><strong>Важно:</strong></h6>
+<p>IntelliJ IDEA работает <strong>независимо</strong> от системной переменной <span class="art_cell_gray">JAVA_HOME</span>. Каждый проект может использовать <em>свою версию JDK</em>.</p>
+
+<h6><strong>Как IDEA находит JDK:</strong></h6>
+<p>Автоматически сканирует <span class="java_tags">стандартные места установки</span>: <span class="art_cell_gray">C:\Program Files\Java\</span>, <span class="art_cell_gray">C:\jdk-*</span> и т.д.</p>
+<p>Использует JDK, <strong>указанные в настройках проекта</strong></p>
+<p>Может использовать системную <span class="art_cell_gray">JAVA_HOME</span> как один из источников, но <em>не зависит от неё</em></p>
+
+<h6><strong>Настройка JDK в IDEA:</strong></h6>
+
+<h2>Способ 1: На уровне проекта</h2>
+<p>1. <strong>File → Project Structure</strong> (или <span class="art_cell_gray">Ctrl + Alt + Shift + S</span>)</p>
+<p>2. Вкладка <strong>"Project"</strong></p>
+<p>3. <em>В поле "SDK"</em> выберите <strong>нужную версию JDK</strong> из списка</p>
+<p>4. <strong>Если нужной версии нет</strong> - <em>нажмите "New..." и укажите путь к JDK</em> (например, <span class="art_cell_gray">C:\jdk-21.0.9_10</span>)</p>
+<p>5. <strong>Нажмите "OK"</strong></p>
+
+<h2>Способ 2: Добавление JDK в список доступных</h2>
+<p>1. <strong>File → Project Structure → SDKs</strong></p>
+<p>2. <em>Нажмите "+" → "Add JDK..."</em></p>
+<p>3. <em>Укажите путь к папке JDK</em> (например, <span class="art_cell_gray">C:\jdk-17.0.12</span>)</p>
+<p>4. IDEA <span class="java_doc">автоматически определит версию</span> и <strong>добавит в список</strong></p>
+<p>5. Теперь этот JDK будет <em>доступен для выбора</em> в любом проекте</p>
+
+<h2>Способ 3: На уровне модуля</h2>
+<p>1. <strong>File → Project Structure → Modules</strong></p>
+<p>2. <em>Выберите нужный модуль</em></p>
+<p>3. <em>На вкладке "Dependencies" в поле "Module SDK"</em> выберите <strong>версию JDK</strong></p>
+<p>4. <span class="java_tags">Разные модули используют</span> разные версии JDK</p>
+
+<h6><strong>Преимущества подхода IDEA:</strong></h6>
+<p>Каждый проект использует свою версию <span class="java_red">Java</span> <em>независимо от других</em></p>
+<p>Не нужно менять системную <span class="art_cell_gray">JAVA_HOME</span> для работы с разными проектами</p>
+<p>Можно открыть <strong>несколько проектов одновременно</strong>, каждый со своей версией JDK</p>
+<p>Настройки JDK сохраняются в файле проекта (<span class="art_cell_gray">.idea</span> или <span class="art_cell_gray">*.iml</span>)</p>
+
+<h6><strong>Пример:</strong></h6>
+<p>Проект A использует <span class="java_red">Java 17</span> (<span class="art_cell_gray">C:\jdk-17.0.12</span>)</p>
+<p>Проект B использует <span class="java_red">Java 21</span> (<span class="art_cell_gray">C:\jdk-21.0.9_10</span>)</p>
+<p>Системная <span class="art_cell_gray">JAVA_HOME</span> может указывать на <span class="java_red">Java 22</span> (<span class="art_cell_gray">C:\jdk-22.0.2</span>)</p>
+<p><span class="java_tags">Все три версии работают</span> <em>одновременно без конфликтов</em></p>
+
+<h4>5. Проблема: java -version показывает неправильную версию</h4>
+
+<h6><strong>Симптомы:</strong></h6>
+<p><span class="art_cell_gray">JAVA_HOME</span> установлена на <span class="java_red">Java 21</span>: <span class="art_cell_gray">C:\jdk-21.0.9_10</span></p>
+<p><span class="art_cell_gray">java -version</span> показывает <span class="java_red">Java 22</span>: <span class="art_cell_gray">java version "22.0.2"</span></p>
+<p><span class="art_cell_gray">where java</span> показывает: <span class="art_cell_gray">C:\jdk-22.0.2\bin\java.exe</span></p>
+
+<h6><strong>Причины:</strong></h6>
+<p>1. В <span class="art_cell_gray">PATH</span> есть прямой путь к <span class="java_red">Java 22</span> (<span class="art_cell_gray">C:\jdk-22.0.2\bin</span>), который идет раньше <span class="art_cell_gray">%JAVA_HOME%\bin</span></p>
+<p>2. <span class="art_cell_gray">%JAVA_HOME%\bin</span> находится <em>не в начале списка</em> PATH</p>
+<p>3. Windows кэширует путь к <span class="art_cell_gray">java.exe</span> из предыдущей конфигурации</p>
+<p>4. <span class="java_red">Java 22</span> может быть установлена в системных папках Windows</p>
+
+<h6><strong>Решение:</strong></h6>
+
+<h2>Шаг 1: Проверьте системный PATH</h2>
+<p>1. Откройте "Переменные среды"</p>
+<p>2. В "Системные переменные" найдите <span class="art_cell_gray">Path</span></p>
+<p>3. Нажмите "Изменить..."</p>
+<p>4. Прокрутите весь список вниз</p>
+<p>5. Ищите <span class="art_cell_gray">C:\jdk-22.0.2\bin</span> или любые прямые пути к <span class="java_red">Java 22</span></p>
+<p>6. Если найдете - <strong>удалите их</strong></p>
+
+<h2>Шаг 2: Проверьте пользовательский PATH</h2>
+<p>1. В разделе "Переменные среды пользователя" найдите <span class="art_cell_gray">Path</span></p>
+<p>2. Проверьте на наличие путей к <span class="java_red">Java 22</span></p>
+<p>3. Удалите их, если найдете</p>
+
+<h2>Шаг 3: Переместите %JAVA_HOME%\bin в начало списка</h2>
+<p>1. В системном <span class="art_cell_gray">Path</span> найдите <span class="art_cell_gray">%JAVA_HOME%\bin</span></p>
+<p>2. Выделите его</p>
+<p>3. Нажимайте кнопку "Вверх", пока он не окажется в самом верху списка</p>
+<p>(после системных путей Windows, но перед остальными)</p>
+
+<h2>Шаг 4: Перезапустите командную строку</h2>
+<p>Закройте все окна CMD</p>
+<p>Откройте новую командную строку</p>
+<p>Выполните проверку:</p>
+<p><span class="art_cell_gray">where java<br>java -version<br>echo %JAVA_HOME%</span></p>
+
+<h6><strong>Ожидаемый результат:</strong></h6>
+<p><span class="art_cell_gray">where java</span> → <span class="art_cell_gray">C:\jdk-21.0.9_10\bin\java.exe</span></p>
+<p><span class="art_cell_gray">java -version</span> → <span class="art_cell_gray">openjdk version "21.0.9" ... LTS</span></p>
+<p><span class="art_cell_gray">echo %JAVA_HOME%</span> → <span class="art_cell_gray">C:\jdk-21.0.9_10</span></p>
+
+<h4>6. Дополнительные проверки</h4>
+
+<h6><strong>Если проблема не решается:</strong></h6>
+
+<h2>Проверка системных папок Windows</h2>
+<p><span class="art_cell_gray">dir C:\Windows\System32\java.exe<br>dir C:\Windows\java.exe</span></p>
+<p>Если файлы найдены - это может быть причиной.</p>
+
+<h2>Проверка всех путей к java.exe</h2>
+<p><span class="art_cell_gray">where /r C:\ java.exe</span></p>
+<p>Покажет все места, где находится <span class="art_cell_gray">java.exe</span>.</p>
+
+<h2>Проверка установленных программ</h2>
+<p>Панель управления → Программы и компоненты</p>
+<p>Проверьте, не установлена ли <span class="java_red">Java 22</span> как системная программа</p>
+
+<h2>Итоговые рекомендации</h2>
+
+<p>1. <strong>Для установки:</strong> Используйте ZIP версию JDK - <em>проще распаковывать</em></p>
+<p>2. <strong>Расположение:</strong> <span class="art_cell_gray">C:\jdk-21.0.9_10\</span> (или аналогичная структура)</p>
+<p>3. <strong>JAVA_HOME:</strong> Установите на путь к JDK: <span class="art_cell_gray">C:\jdk-21.0.9_10</span></p>
+<p>4. <strong>PATH:</strong> Добавьте <span class="art_cell_gray">%JAVA_HOME%\bin</span> и переместите в начало списка</p>
+<p>5. <strong>Проверка:</strong> Всегда открывайте новую командную строку после изменения переменных окружения</p>
+<p>6. <strong>Порядок в PATH:</strong> <span class="java_tags">Критически важен</span> - <span class="art_cell_gray">%JAVA_HOME%\bin</span> должен быть в начале</p>
+
+<h2>Команды для проверки</h2>
+
+<p><span class="art_cell_gray"># Проверка версии Java<br>java -version<br><br># Проверка компилятора<br>javac -version<br><br># Проверка переменной JAVA_HOME<br>echo %JAVA_HOME%<br><br># Поиск исполняемого файла java<br>where java<br><br># Проверка всех путей к java.exe<br>where /r C:\ java.exe</span></p>
+
